@@ -1,0 +1,122 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: var(--space-8) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--space-8) var(--space-7);
+  }
+}
+
+/* Two soft colour fields drifting behind the hero copy. Pure CSS, so it costs almost nothing. */
+.glow {
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  background:
+    radial-gradient(closest-side at 30% 40%, var(--color-hero-glow-1), transparent 70%),
+    radial-gradient(closest-side at 70% 60%, var(--color-hero-glow-2), transparent 70%);
+  opacity: 0.55;
+  filter: blur(40px);
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-6%, -4%, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(6%, 4%, 0) rotate(25deg);
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  max-width: 640px;
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.heroTitle {
+  font-size: var(--text-hero);
+}
+
+.heroText {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.section {
+  margin-top: var(--space-8);
+  scroll-margin-top: calc(var(--header-height) + var(--space-7));
+}
+
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.sectionHeader h2 {
+  font-size: var(--text-2xl);
+}
+
+.sectionHeader p {
+  color: var(--color-text-muted);
+}
+
+.categoryList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categoryTile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-decoration: none;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+
+.categoryTile:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.arrow {
+  transition: transform 200ms ease;
+}
+
+.categoryTile:hover .arrow {
+  transform: translateX(4px);
+}

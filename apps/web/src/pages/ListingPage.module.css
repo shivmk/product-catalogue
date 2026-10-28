@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.header h1 {
+  font-size: var(--text-hero);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.placeholderTitle {
+  color: var(--color-text-muted);
+}
+
+.count {
+  color: var(--color-text-muted);
+}
+
+.section + .section {
+  margin-top: var(--space-8);
+}
+
+.sectionTitle {
+  margin-bottom: var(--space-5);
+  font-size: var(--text-2xl);
+}
