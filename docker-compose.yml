@@ -1,0 +1,47 @@
+# docker compose up --build
+#   Web app:      http://localhost:8080
+#   Sales inbox:  http://localhost:8025  (Mailpit catches every email the API sends)
+#   API:          http://localhost:3000/api/health
+#
+# Values below can be overridden in a .env file (copy .env.example).
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      TRUST_PROXY: 1
+      FAKE_STORE_BASE_URL: ${FAKE_STORE_BASE_URL:-https://fakestoreapi.com}
+      FEATURED_PRODUCT_IDS: ${FEATURED_PRODUCT_IDS:-1,5,9,13,18}
+      CATEGORY_TOP_RATED_COUNT: ${CATEGORY_TOP_RATED_COUNT:-3}
+      MAIL_TRANSPORT: smtp
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SALES_INBOX: ${SALES_INBOX:-sales@example.com}
+      MAIL_FROM: ${MAIL_FROM:-Product Catalogue <no-reply@example.com>}
+      PUBLIC_WEB_URL: ${PUBLIC_WEB_URL:-http://localhost:8080}
+      ENQUIRY_RATE_LIMIT_MAX: ${ENQUIRY_RATE_LIMIT_MAX:-5}
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mailpit
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      api:
+        condition: service_healthy
+
+  mailpit:
+    image: axllent/mailpit:v1.32
+    ports:
+      - '8025:8025'

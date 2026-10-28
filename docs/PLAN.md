@@ -27,19 +27,20 @@ Browser ──► web (React) ──/api──► api (Express)
 ```
 
 Rules:
+
 - The client never calls Fake Store; it only knows `/api`.
 - Routes never call adapters directly; services depend on ports only.
 - `server.ts` is the single composition root that picks adapters from config.
 
 ## Acceptance criteria → design
 
-| Criterion | Endpoint | Notes |
-|---|---|---|
-| Home: 5 chosen "top rated" products | `GET /api/products/featured` | Curated IDs from config (`FEATURED_PRODUCT_IDS`); falls back to highest rated if unset |
-| Category: top rated + additional | `GET /api/categories/:slug` | Top N by rating (`CATEGORY_TOP_RATED_COUNT`, default 3), then the rest |
-| Search | `GET /api/products?search=term` | Case-insensitive match on title, description, category |
-| Product page | `GET /api/products/:id` | |
-| Enquiry → sales email + thank you | `POST /api/enquiries` | zod validation, honeypot, rate limit, HTML-escaped email |
+| Criterion                           | Endpoint                        | Notes                                                                                  |
+| ----------------------------------- | ------------------------------- | -------------------------------------------------------------------------------------- |
+| Home: 5 chosen "top rated" products | `GET /api/products/featured`    | Curated IDs from config (`FEATURED_PRODUCT_IDS`); falls back to highest rated if unset |
+| Category: top rated + additional    | `GET /api/categories/:slug`     | Top N by rating (`CATEGORY_TOP_RATED_COUNT`, default 3), then the rest                 |
+| Search                              | `GET /api/products?search=term` | Case-insensitive match on title, description, category                                 |
+| Product page                        | `GET /api/products/:id`         |                                                                                        |
+| Enquiry → sales email + thank you   | `POST /api/enquiries`           | zod validation, honeypot, rate limit, HTML-escaped email                               |
 
 ## Quality bar
 

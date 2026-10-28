@@ -1,0 +1,104 @@
+.skipLink {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-brand);
+  color: var(--color-brand-contrast);
+}
+
+.skipLink:focus {
+  top: var(--space-2);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.headerInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-3);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, transparent 50%, var(--color-accent) 50%), var(--color-brand);
+}
+
+.nav {
+  border-top: 1px solid var(--color-border);
+}
+
+.navList {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 auto;
+  padding-block: var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.navLink {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.navLink:hover {
+  color: var(--color-text);
+  background: var(--color-surface-muted);
+}
+
+.navLinkActive {
+  color: var(--color-brand-contrast);
+  background: var(--color-brand);
+}
+
+.navLinkActive:hover {
+  color: var(--color-brand-contrast);
+  background: var(--color-brand);
+}
+
+.main {
+  min-height: 70vh;
+  padding-block: var(--space-6) var(--space-8);
+}
+
+.footer {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
