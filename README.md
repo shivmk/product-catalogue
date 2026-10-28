@@ -7,6 +7,15 @@ It is built as a **foundation rather than a throwaway prototype**. The three thi
 will change (the product data source, the look and feel, and the email provider) each sit behind
 their own boundary, so each can be swapped without touching the rest.
 
+> **Quick start:** with Docker running, one command starts everything (web app, API and a local
+> email inbox):
+>
+> ```bash
+> docker compose up --build
+> ```
+>
+> Then open **http://localhost:8080**. Full steps are in [Run it with Docker](#run-it-with-docker).
+
 ![Home page](docs/screenshots/home.png)
 
 | Document                     | What's in it                                                           |
@@ -16,27 +25,75 @@ their own boundary, so each can be swapped without touching the rest.
 | [docs/PLAN.md](docs/PLAN.md) | The plan/spec written before any code                                  |
 | [CLAUDE.md](CLAUDE.md)       | Instructions for the AI coding agent (architecture rules, conventions) |
 
-## Run it (about 3 minutes)
+## Run it with Docker
 
-**Prerequisite:** Docker Desktop (or Docker Engine with Compose v2). No accounts or API keys needed.
+This takes about 3 minutes, most of it the first image build. No accounts, API keys or `.env` file
+are needed.
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows), or Docker
+  Engine with the Compose v2 plugin (Linux). Check with `docker compose version`.
+- Docker must be **running**.
+- Ports **8080**, **3000** and **8025** must be free.
+- Internet access: the API fetches product data from fakestoreapi.com.
+
+### Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/shivmk/product-catalogue.git
+   cd product-catalogue
+   ```
+
+2. Build and start everything:
+
+   ```bash
+   docker compose up --build
+   ```
+
+   This starts three containers: `api` (Node.js), `web` (nginx serving the React app and
+   proxying `/api`) and `mailpit` (the local email inbox). Once `web` has started, the app is
+   ready. The web container waits for the API's health check.
+
+3. Open the app:
+
+   | What                      | URL                              |
+   | ------------------------- | -------------------------------- |
+   | Web app                   | http://localhost:8080            |
+   | **Sales inbox** (Mailpit) | http://localhost:8025            |
+   | API health check          | http://localhost:3000/api/health |
+
+4. Try the enquiry flow: open any product → **Enquire** → fill in your name and email → **Send
+   enquiry**. You'll see the "Thank you" message, and the email appears in the sales inbox at
+   http://localhost:8025.
+
+### Stopping and other useful commands
 
 ```bash
-git clone <this repo> && cd <repo>
+docker compose up --build -d   # start in the background instead
+docker compose logs -f api     # follow the API logs
+docker compose down            # stop and remove the containers
+```
+
+### Configuration (optional)
+
+Defaults work out of the box. To change something (for example which products are featured on the
+home page), copy the example file, edit it, and restart:
+
+```bash
+cp .env.example .env
 docker compose up --build
 ```
 
-| What                      | URL                              |
-| ------------------------- | -------------------------------- |
-| Web app                   | http://localhost:8080            |
-| **Sales inbox** (Mailpit) | http://localhost:8025            |
-| API health                | http://localhost:3000/api/health |
+### Troubleshooting
 
-**To check the enquiry flow:** open any product → **Enquire** → fill in the form → **Send enquiry**.
-You'll see the "Thank you" message, and the email appears in the sales inbox at
-http://localhost:8025.
-
-No `.env` file is needed. To change anything (for example which products are featured), copy
-`.env.example` to `.env`, edit it, and run `docker compose up` again.
+| Problem                                         | Fix                                                                                                     |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `port is already allocated`                     | Another app is using 8080, 3000 or 8025. Stop it, or change the left-hand port in `docker-compose.yml`. |
+| `Cannot connect to the Docker daemon`           | Start Docker Desktop and try again.                                                                     |
+| The app loads but shows "We couldn't load this" | The API couldn't reach fakestoreapi.com. Check your internet connection, then click **Try again**.      |
 
 ### Run without Docker (for development)
 
