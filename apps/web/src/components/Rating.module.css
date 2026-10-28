@@ -22,5 +22,6 @@
 }
 
 .count {
+  white-space: nowrap;
   color: var(--color-text-muted);
 }
