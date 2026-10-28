@@ -13,7 +13,7 @@ export function slugify(name: string): string {
 
 /** Lower-case, strip accents and apostrophes, so "Men's" matches "mens". */
 function normalise(text: string): string {
-  return text.normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/['’]/g, '').toLowerCase();
+  return text.normalize('NFKD').replace(/\p{Diacritic}/gu, '').replace(/['’]/g, '').toLowerCase();
 }
 
 export function categoriesOf(products: Product[]): Category[] {

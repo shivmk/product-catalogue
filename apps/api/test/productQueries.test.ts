@@ -9,6 +9,7 @@ describe('slugify', () => {
     expect(slugify("men's clothing")).toBe('mens-clothing');
     expect(slugify("Women's Clothing")).toBe('womens-clothing');
     expect(slugify('electronics')).toBe('electronics');
+    expect(slugify('Café Décor')).toBe('cafe-decor');
   });
 });
 
