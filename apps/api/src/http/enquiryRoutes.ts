@@ -1,5 +1,6 @@
 import { Router, type RequestHandler } from 'express';
-import { EnquiryRequestSchema, type EnquiryResponse } from '@catalogue/shared';
+import type { EnquiryResponse } from '@catalogue/shared';
+import { EnquiryRequestSchema } from '@catalogue/shared/schemas';
 import type { EnquiryService } from '../services/EnquiryService.js';
 import { parseOrThrow } from './validation.js';
 

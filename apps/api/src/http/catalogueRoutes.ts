@@ -1,12 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import {
-  SearchQuerySchema,
-  type CategoryList,
-  type CategoryPage,
-  type Product,
-  type ProductList,
-} from '@catalogue/shared';
+import type { CategoryList, CategoryPage, Product, ProductList } from '@catalogue/shared';
+import { SearchQuerySchema } from '@catalogue/shared/schemas';
 import type { CatalogueService } from '../services/CatalogueService.js';
 import { parseOrThrow } from './validation.js';
 
